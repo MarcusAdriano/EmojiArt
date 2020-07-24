@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct EmojiArtView: View {
+struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
     
     var body: some View {

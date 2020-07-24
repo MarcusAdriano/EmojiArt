@@ -8,10 +8,14 @@
 
 import SwiftUI
 
-struct EmojiArtView: View {
+struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
     
     var body: some View {
-        Text("Hello, World!")
+        HStack {
+            ForEach(EmojiArtDocument.palette.map { String($0) }, id: \.self) { emoji in
+                Text(emoji)
+            }
+        }
     }
 }
