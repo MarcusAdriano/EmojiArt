@@ -12,10 +12,32 @@ struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
     
     var body: some View {
-        HStack {
-            ForEach(EmojiArtDocument.palette.map { String($0) }, id: \.self) { emoji in
-                Text(emoji)
+        VStack {
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(EmojiArtDocument.palette.map { String($0) }, id: \.self) { emoji in
+                        Text(emoji)
+                            .font(Font.system(size: self.emojiFontSize))
+                    }
+                }
             }
+            .padding(.horizontal)
+            Rectangle().foregroundColor(.yellow)
+                .edgesIgnoringSafeArea([.horizontal, .vertical])
+                .onDrop(of: ["public.image"], isTargeted: nil) { providers, location in
+                    return self.drop(providers: providers)
+                }
         }
     }
+    
+    private func drop(providers: [NSItemProvider]) -> Bool {
+        let found = providers.loadFirstObject(ofType: URL.self) { url in
+            print("Dropped \(url)")
+            self.document.setBackgroundURL(url)
+        }
+        return found
+    }
+    
+    // MARK: - Design constants
+    private let emojiFontSize: CGFloat = 40.0
 }
