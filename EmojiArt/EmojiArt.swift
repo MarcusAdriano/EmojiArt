@@ -28,6 +28,16 @@ struct EmojiArt: Codable {
         }
     }
     
+    init() {}
+    
+    init?(json: Data?) {
+        if json != nil, let newEmojiArt = try? JSONDecoder().decode(EmojiArt.self, from: json!) {
+            self = newEmojiArt
+        } else {
+            return nil
+        }
+    }
+    
     var json: Data? {
         return try? JSONEncoder().encode(self)
     }
