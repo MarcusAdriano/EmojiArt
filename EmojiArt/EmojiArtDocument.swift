@@ -11,13 +11,22 @@ import SwiftUI
 class EmojiArtDocument: ObservableObject {
     static let palette: String = "🐝🦏🥬🍎💚📱"
     
-    @Published private var emojiArt: EmojiArt = EmojiArt() {
+    @Published private var emojiArt: EmojiArt {
         willSet {
             objectWillChange.send()
         }
         didSet {
-            print("json = \(emojiArt.json?.utf8 ?? "nil")")
+            // set(data?, key)
+            // when data is nil is the same of cle ar
+            UserDefaults.standard.set(emojiArt.json, forKey: EmojiArtDocument.untitled)
         }
+    }
+    
+    private static let untitled = "EmojiArtDocument.untitled"
+    
+    init() {
+        emojiArt = EmojiArt(json: UserDefaults.standard.data(forKey: EmojiArtDocument.untitled)) ?? EmojiArt()
+        fetchBackgroundImageData()
     }
     
     @Published private(set) var backgroundImage: UIImage?
