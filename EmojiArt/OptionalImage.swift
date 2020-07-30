@@ -6,4 +6,16 @@
 //  Copyright © 2020 Marcus Adriano. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
+
+struct OptionalImage: View {
+    var uiImage: UIImage?
+    
+    var body: some View {
+        Group {
+            if uiImage != nil {
+                Image(uiImage: uiImage!)
+            }
+        }
+    }
+}
