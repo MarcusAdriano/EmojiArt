@@ -8,6 +8,11 @@
 
 import SwiftUI
 
+extension EmojiArt.Emoji {
+    var fontSize: CGFloat { CGFloat(self.size) }
+    var location: CGPoint { CGPoint(x: CGFloat(x), y: CGFloat(y)) }
+}
+
 extension Collection where Element: Identifiable {
     func firstIndex(matching element: Element) -> Self.Index? {
         firstIndex(where: { $0.id == element.id })
